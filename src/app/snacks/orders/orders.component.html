@@ -1,0 +1,89 @@
+
+<div align="center">
+        <span  *ngIf="this.orderService.userOrders?.length>0" style="font-size:18px;"><em>Dear <b>{{ this.auth.currentUser?.username}}</b>, Your orders till date..</em></span><br/>
+        <span   *ngIf="this.orderService.userOrders?.length===0" style="font-size:18px;"><em>Dear <b>{{ this.auth.currentUser?.username}}</b>..</em></span><br/>
+    <div *ngIf="this.orderService.userOrders?.length===0" class="panel panel-default"   style="max-width:350px;color:orange"> 
+        <div  class="panel-body">Looks like Food Cart is currently empty!!
+            <br/>To place an order right away, <a [routerLink]="['/foodmenu']">click here</a>
+        </div>
+    
+    
+    </div>
+    <div *ngIf="this.orderService.userOrders?.length>0; " class="table" style="border: 1px solid lightgray">
+            
+                 <div class="row table-header">
+                        <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span>Sr#</span>
+                         </div>
+                         <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span>Order Id</span>
+                         </div>
+                         <div class="col-md-4 table-cell">
+                             <div class="row" style="text-align:center;">Details</div>
+                             <hr>
+                                <div class="row">
+                                   <div class="col-md-3 table-cell" style="text-align:left;border-right:1px solid lightgrey">
+                                           <span>Item</span>
+                                   </div>
+                                   
+                                   <div class="col-md-3 table-cell" style="text-align:left;border-right:1px solid lightgrey">
+                                           <span>Size</span>
+                                   </div>
+                                   
+                                   <div class="col-md-3 table-cell" style="text-align:left;border-right:1px solid lightgrey">
+                                           <span>Quantity</span>
+                                   </div>
+                                   
+                                   <div class="col-md-3 table-cell" style="text-align:left;">
+                                       <span>Price Per Unit</span>
+                                   </div>
+                                </div>
+                           </div> 
+                          <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span>Total Cost</span>
+                          </div>
+                          <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span>Order Date</span>
+                          </div>
+                          <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span>Order Status</span>
+                          </div>
+                         <div class="col-md-2 table-cell" style="text-align:left;">
+                                <span></span>
+                         </div>
+                          
+                 </div>
+
+                 <hr>
+                 <div *ngFor=" let order of this.orderService.userOrders; let i = index" >
+                       
+                     <div class="row" >
+                        
+                            <div class="col-md-1 table-cell" style="text-align:center;">
+                                    <span>{{i+1}}</span>
+                             </div>
+                             <div class="col-md-1 table-cell" style="text-align:left;">
+                                    <span>{{order.id}}</span>
+                             </div>
+                             <app-orderitems [orderId]="order.id" (outItem)="getProcessdItem($event);" [orderItems]="order.items">
+                             
+                             </app-orderitems>
+                             <div class="col-md-1 table-cell" style="text-align:left;">
+                                   <span>{{order.orderDate | date: shortDate}}</span>
+                             </div>
+                             <div class="col-md-1 table-cell" style="text-align:left;">
+                                   <span>{{order.status}}</span>
+                             </div>
+                            <div class="col-md-2 table-cell" style="text-align:left;">
+                                   <span><button appModalTrigger="updateOrder" (click)="this.orderId=order.id"  class="btn btn-primary">Update</button>&nbsp;<button class="btn btn-primary" appModalTrigger="cancelOrder" (click)="this.orderId=order.id">Delete</button></span>
+                            </div>                        
+                     
+                    <hr>
+                </div>
+                <br/>               
+    </div>
+
+</div>
+
+ <app-modal title="" elementId="cancelOrder" [funcOK]="cancelOrder.bind(this,this.orderId)">Are you sure want to cancel order?</app-modal>
+ <app-modal title="" elementId="updateOrder" [funcOK]="updateOrder.bind(this,this.orderId)">Are you sure want to update order?</app-modal>

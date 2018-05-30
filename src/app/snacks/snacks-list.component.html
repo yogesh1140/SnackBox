@@ -1,0 +1,47 @@
+<div class="table">
+    <div class="row table-header">
+            <div class="col-md-2 table-cell" style="text-align:center;">
+                   <span>{{this.snackType}}</span>
+            </div>
+            <div class="col-md-2 table-cell" style="text-align:center;">
+                    <span>Size</span>
+             </div>
+             <div class="col-md-2 table-cell" style="text-align:center;">
+                    <span>Price</span>
+             </div>
+             <div class="col-md-1 table-cell" style="text-align:center;">
+                    <span>Quantity</span>
+             </div>
+             <div class="col-md-2 table-cell" style="text-align:left;">
+                    <span>Add to Cart</span>
+             </div>
+    </div>
+    <hr>
+<div  class="row table-row"  *ngFor="let snack of this.snacks">
+    <form #frm="ngForm" novalidate>
+    <div class="col-md-2 table-cell" style="text-align:center;">
+        <img style="max-width:75px;" [src]="snack?.imageUrl"/>
+        <h5  #name >{{snack.name}}</h5>
+    </div>
+    <div  class="col-md-2 table-cell" style="text-align:center;" >
+        <select class="form-control" required name="selectedSize" [ngModel]="snack.availableSizes[0].size" [ngStyle]="{'background-color': !frm.form.get('selectedSize')?.valid && frm.form.get('selectedSize')?.touched ? 'Red':null}">            
+            <option *ngFor="let availSize of snack.availableSizes;"  (value)="availSize.size">{{availSize.size}}</option>
+        </select>
+    </div>
+    <div  class="col-md-2 table-cell" style="text-align:center;">        
+            <span >{{getPrice(snack, this.frm.form.get('selectedSize')?.value)| currency:'INR':true}}</span>
+            
+    </div>
+    <div  class="col-md-1 table-cell" style="text-align:center;">
+            <input type="number" ngControl class="form-control" name="qty" min=1 (ngModel)="qty" ngModel="{{+1}}" style="max-width:50px;"/>            
+    </div>
+    <div  class="col-md-1 table-cell" style="text-align:center;">
+        <span ><button (click)="addToCart(frm.value, +snack.id)" style="background: none !important;
+            color: inherit;
+            border: none;" ><img  src="../../assets/images/Add.png" style="max-width:25px;" /></button></span>              
+    </div>
+    </form>
+</div>
+<br/>
+</div>
+

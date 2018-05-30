@@ -1,0 +1,91 @@
+<div class="row nav"  >
+    
+        <div class="col-md-2" >
+        <span style="margin-left:20px;">
+            <img [routerLink]="['/home']" src="../assets/images/logo.png" style="max-width:75px;">
+            </span>
+        </div>
+        <div class ="col-md-5">
+           
+        </div>
+        <div *ngIf="!this.auth.isAuthenticated()" class ="col-md-4">
+                <div class="col-md-5"><span></span></div>
+            <div class="col-md-5"><div style="margin-top:10px;"><img data-toggle="modal" data-target="#login" src="../assets/images/order-online (1).png" (click)="resetInvalidFlag()" style="max-width:175px;max-height:75px"></div></div>
+            <div class="col-md-2"><div><img src="../assets/images/delivery2.png" style="max-height:75px"></div></div>               
+        </div>
+        <div *ngIf="this.auth.isAuthenticated()" class ="col-md-5">
+             <div class="btn-group nav-btns" style="top:25px;"> 
+                 <button [ngStyle]="{'background-color':router.url === '/foodmenu' ? 'midnightblue' : ''}" class="btn btn-primary" style="margin-right:2px" [routerLink]="['/foodmenu']"><span class="glyphicon glyphicon-cutlery"> </span> Food Menu </button>
+                 <button [ngStyle]="{'background-color':router.url === '/foodmenu/orders' ? 'midnightblue' : ''}" class="btn btn-primary" style="margin-right:2px" [routerLink]="['/foodmenu/orders']"><span class="glyphicon glyphicon-th-list"></span> My Orders</button>
+                 <button [ngStyle]="{'background-color':router.url === '/foodmenu/cart' ? 'midnightblue' : ''}" class="btn btn-primary" style="margin-right:2px" [routerLink]="['/foodmenu/cart']"><span class="glyphicon glyphicon-shopping-cart" ></span> Food Cart<span class="numberCircle">{{getFoodCartCount()}}</span></button>
+
+                 <div class="dropdown">
+                  <button class=" dropdown btn btn-primary" style="border-radius: 0"><span class="glyphicon glyphicon-user"></span>{{this.auth.currentUser.username}}</button>
+                  <div id="myDropdown" class="dropdown-content">
+                    <li appModalTrigger="changePass"><span class="glyphicon glyphicon-edit"></span>Change Password</li>                    
+                    <li appModalTrigger="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</li>
+                  </div>
+                </div>
+                 <!-- <button class="btn btn-primary" style="margin-right:2px"  appModalTrigger="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+                  -->
+             </div>
+        </div>
+</div>
+
+<app-modal title="" elementId="logout" [funcOK]="logout.bind(this)"><p>Proceed with logout?</p></app-modal>
+
+
+
+
+
+<!-- Modal -->
+<div id="login" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+<div class="row">
+   
+          <div class="panel panel-primary" style="border-radius:0">
+              <div class="panel-heading" style="border-radius:0">Login</div>
+              <div class="panel-body">  
+                  <form autocomplete="off" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" novalidate>
+                 
+                    <div class="form-group"  >
+                        <label for="userName">User Name:</label>
+                        <em *ngIf="loginForm.controls.userName?.invalid && (loginForm.controls.userName?.dirty || mouseoverLogin)">Required</em>
+                        <div class="inner-addon left-addon">
+                          <i class="glyphicon glyphicon-user"></i>
+                          <input id="userName" type="text" (ngModel)="userName" name="userName" required class="form-control" placeholder="User Name..." />
+                        </div>
+                  
+                      </div>
+                      <div class="form-group" >
+                        <label for="password">Password:</label>
+                        <em *ngIf="loginForm.controls.password?.invalid && (loginForm.controls.password?.dirty || mouseoverLogin)">Required</em>
+                        <div class="inner-addon left-addon">
+                            <i class="glyphicon glyphicon-lock"></i>
+                          <input id="password" type="password" (ngModel)="password" name="password" required class="form-control"placeholder="Password..."/>
+                        </div>
+                      </div>
+                      <div class="form-group" >
+                        <span><input type="checkbox" (ngModel)="remember_me" name="remember_me" value="yes"/>Remember Me</span>
+                      </div>
+                        <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false">
+                          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid" >Login</button>
+                        </span>
+                     
+                    </form>
+                    <hr>
+                    <div *ngIf="loginInvalid" class="alert alert-danger">Invalid Login Info</div> 
+                    <div>Don't have an account! <span data-toggle="modal" data-target="#login" [routerLink]="['/user/signup']"><a >Sign Up Here</a></span></div> 
+              </div>
+          </div>
+      
+  </div>
+  
+  
+  
+      
+      
+    
+
+  </div>
+</div>

@@ -1,0 +1,78 @@
+/* You can add global styles to this file, and also import other style files */
+.hoverwell:hover {
+    background-color: #CDCDCD;
+    cursor: pointer;
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+img {
+  outline:none !important;
+  border : 0;
+}
+img[ng-reflect-router-link]{
+  cursor: pointer;
+}
+  .hoverwell {
+    
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  
+  .table-header{ font-weight: bold;}
+  .footer{
+    background-color: #F4F1F1;
+  }
+  app-footer img{
+    max-width: 100px;
+  
+  }
+  .container {
+    padding-top: 10px;
+   
+  }
+  .nav{
+   min-height: 75px;
+   background-color: #F4F1F1;
+  }
+  .pointable {
+    cursor: pointer;
+  }
+  
+  button {
+    color: #555;
+  }
+  
+  [hidden] {
+    display: none !important;
+  }
+  
+  .toast-success {
+    background-color: #51a351;
+  }
+  .toast-error {
+    background-color: #bd362f;
+  }
+  .toast-info {
+    background-color: #2f96b4;
+  }
+  .toast-warning {
+    background-color: #f89406;
+  }
+
+  .inner-addon { 
+    position: relative; 
+}
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+  

@@ -1,0 +1,24 @@
+    <div class="col-md-4 table-cell">
+        <div class="row" *ngFor=" let item of processedOrderItems; let i =index">
+           <div class="col-md-3 table-cell" style="text-align:left;">
+                   <span>{{item.itemName}}</span>
+           </div>
+           <form #oItems="ngForm">
+                <div class="col-md-3 table-cell" style="text-align:left;" >
+                        <select class="form-control" style="width:85px;padding-left:0;" name="size" [(ngModel)]="item.size" (change)="updateOrderBySize(item, oItems.form.get('size').value)">
+                            <option *ngFor="let itemSize of getItemSizes(item,i)" [value]="itemSize.size">{{itemSize.size}}<option></option>
+                        </select>
+                </div>
+                <div class="col-md-3 table-cell" style="text-align:left;">
+                        <input class="form-control" style="max-width:50px;" type="number" min="1" name="qty" (ngModel)="qty"  ngModel= "{{item.quantity}}" (change)="updateOrder(item, oItems.form.get('qty').value)" />
+                </div>
+            </form>
+           <div class="col-md-3 table-cell" style="text-align:left;">
+               <span>{{item.price| currency:'INR':true}}</span>
+           </div>
+        </div>                                 
+   </div>       
+    <div class="col-md-1 table-cell" style="text-align:left;">
+          <span>{{totalCost| currency:'INR':true}}</span>
+    </div>
+    

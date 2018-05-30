@@ -1,0 +1,68 @@
+<div align="center">
+        <span style="font-size:18px;"><em>Dear <b>{{ this.auth.currentUser?.username}}</b>..</em></span><br/>
+    <div *ngIf="this.orderService.cartItems?.length===0" class="panel panel-default"   style="max-width:350px;color:orange"> 
+        <div  class="panel-body">Looks like Food Cart is currently empty!!
+            <br/>To place an order right away, <a [routerLink]="['/foodmenu']">click here</a>
+        </div>
+    
+    
+    </div>
+    <div *ngIf="this.orderService.cartItems?.length>0" class="table">
+            
+                 <div class="row table-header">
+                         <div class="col-md-2 table-cell" style="text-align:left;">
+                                <span>Item</span>
+                         </div>
+                         <div class="col-md-2 table-cell" style="text-align:left;">
+                                 <span>Food Item</span>
+                          </div>
+                          <div class="col-md-2 table-cell" style="text-align:left;">
+                                 <span>Quantity* Price</span>
+                          </div>
+                          <div class="col-md-1 table-cell" style="text-align:left;">
+                                 <span>Action</span>
+                          </div>
+                          
+                 </div>
+
+                 <hr>
+                 <div *ngFor=" let item of this.orderService.cartItems" >
+                     <div class="row">
+                        <div class="col-md-2 table-cell" style="text-align:left;">
+                               <span><img style="max-width:75px;" [src]="item.itemUrl"/></span>
+                        </div>
+                        <div class="col-md-2 table-cell" style="text-align:left;">
+                                <span>{{item.size+": "+item.itemName}}</span>
+                         </div>
+                         <div class="col-md-2 table-cell"  style="text-align:center;">
+                                <span >{{item.quantity +"*"+ item.price}}</span>
+                         </div>
+                         <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span><img style="max-width:35px;" src="../../../assets/images/delete-icon.png" (click)="deleteFromCart(item)"/></span>
+                         </div>
+                        
+                    </div>
+                    <hr>
+                </div>
+                <br/>
+                <div class="row">
+                        <div class="col-md-2 table-cell" style="text-align:left;">
+                               <span></span>
+                        </div>
+                        <div class="col-md-2 table-cell" style="text-align:left;">
+                                <span>{{"Total bill: " + (getTotalPrice() | currency:'INR':true)}}</span>
+                         </div>
+                         <div class="col-md-2 table-cell" style="text-align:left;">
+                                <span><button class="btn btn-success" appModalTrigger="placeOreder" >Place Order</button></span>
+                         </div>
+                         <div class="col-md-1 table-cell" style="text-align:left;">
+                                <span><button class="btn btn-danger" appModalTrigger="cancelOrederCart">Cancel Order</button></span>
+                         </div>
+                         
+                </div>
+    </div>
+
+</div>
+
+<app-modal title="" elementId="cancelOrederCart" [funcOK]="cancelOrder.bind(this)"><p>Are you sure want to cancel order?</p></app-modal>
+<app-modal title="" elementId="placeOreder" [funcOK]="placeOrder.bind(this)"><p>Are you sure want to place order?</p></app-modal>
